@@ -46,43 +46,4 @@ router.route('/register')
 
     });
 
-router.route('/user/:username')
-
-    .get(function (req, res) {
-        User.find({ Username: req.params.username }, function (err, user) {
-            if (err)
-                res.send(err);
-            res.json(user);
-        });
-    })
-
-    .put(function (req, res) {
-        User.find({ Username: req.params.username }, function (err, user) {
-
-            if (err)
-                res.send(err);
-
-            User.Username = req.body.Username;
-            User.save(function (err) {
-                if (err)
-                    res.send(err);
-
-                res.json({ message: 'User updated!' });
-            });
-
-        });
-    })
-
-router.route('/user/:id')
-    .delete(function (req, res) {
-        User.remove({
-            _id: req.params.id
-        }, function (err, User) {
-            if (err)
-                res.send(err);
-
-            res.json({ message: 'Successfully deleted' });
-        });
-    });
-
 module.exports = router;

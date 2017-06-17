@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var phonebookSchama = mongoose.Schema({
-    phonebookid: {
+    folderId: {
         type: String,
         index: true,
         require:true
@@ -13,7 +13,7 @@ var phonebookSchama = mongoose.Schema({
         type:String,
         require:true
     },
-    create_date: {
+    createDate: {
         type:String,
         require:true
     },

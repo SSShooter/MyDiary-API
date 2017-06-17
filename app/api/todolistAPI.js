@@ -14,21 +14,15 @@ router.use(function (req, res, next) {
 });
 
 
-router.route('/Todolist')
+router.route('/todolist')
     .post(function (req, res) {
-        console.log(req.body);
         var Todolist = new Todolist(req.body);
-
         Todolist.save(function (err) {
             if (err)
                 res.send(err);
-
             res.json({ message: 'Todolist created!' });
         });
-
-
     })
-
     .get(function (req, res) {
         Todolist.find(function (err, Todolist) {
             if (err)
@@ -38,41 +32,32 @@ router.route('/Todolist')
         });
     });
 
-router.route('/Todolist/:Todolistname')
-
+router.route('/todolist/:id')
     .get(function (req, res) {
-        Todolist.find({Todolistname:req.params.Todolistname}, function (err, Todolist) {
+        Todolist.findById(req.params.id, function (err, Todolist) {
             if (err)
                 res.send(err);
             res.json(Todolist);
         });
     })
-
     .put(function (req, res) {
-        Todolist.find({Todolistname:req.params.Todolistname}, function (err, Todolist) {
-
+        Todolist.findById(req.params.id, function (err, Todolist) {
             if (err)
                 res.send(err);
-
-            Todolist.Todolistname = req.body.Todolistname;
+            Todolist.id = req.body.id;
             Todolist.save(function (err) {
                 if (err)
                     res.send(err);
-
                 res.json({ message: 'Todolist updated!' });
             });
-
         });
     })
-
-router.route('/Todolist/:id')
     .delete(function (req, res) {
         Todolist.remove({
             _id: req.params.id
         }, function (err, Todolist) {
             if (err)
                 res.send(err);
-
             res.json({ message: 'Successfully deleted' });
         });
     });

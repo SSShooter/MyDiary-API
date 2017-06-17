@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var todolistSchama = mongoose.Schema({
-    todolistid: {
+    folderId: {
         type: String,
         index: true,
         require:true
@@ -14,7 +14,7 @@ var todolistSchama = mongoose.Schema({
         type:String,
         require:true
     },
-    create_date:  {
+    createDate:  {
         type:String,
         require:true
     },

@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var diarySchama = mongoose.Schema({
-    diaryid: {
+    folderId: {
         type: String,
         index: true,
         require:true
@@ -11,7 +11,7 @@ var diarySchama = mongoose.Schema({
     },
     pic:[],
     tag: String,
-    create_date: {
+    createDate: {
         type:String,
         require:true
     }
