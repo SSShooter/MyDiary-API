@@ -11,9 +11,11 @@
   "author": "Chris Sevilleja <scotch.io>",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "~1.0.1",
     "express": "~4.0.0",
-    "morgan": "~1.0.0",
-    "mongoose" : "~4.6.8",
-    "body-parser": "~1.0.1"
+    "express-session": "^1.15.3",
+    "mongoose": "~4.6.8",
+    "morgan": "~1.0.0"
   }
 }
