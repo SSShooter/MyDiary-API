@@ -40,6 +40,10 @@ foldername | 文件夹名 | y
 ## 删除指定文件夹
     接口地址：/api/folder/:id   
     请求方式：delete
+## 获取文件夹内所有内容
+    请求地址：/api/folder/:type/:folderId
+    请求方式：get  
+    备注：type限选'diary','phonebook','todolist'
 ## 新增一篇日记
     接口地址：/api/diary
     请求方法：post
@@ -54,9 +58,6 @@ weather | 天气 | y | String
 bookmark | 书签 | n | boolean
 tag | 标签 | n | String
 createDate | 创建日期 | y | String(YYYY-MM-DD)
-## 获取某日记本内所有日记
-    请求地址：/api/diary/:folderId
-    请求方式：get  
 ## 获取一篇日记内容
     请求地址：/api/diary/:id
     请求方式：get  
@@ -72,9 +73,6 @@ folderId | 所在folder的id | y
 contact | 联系人名称 | y
 number | 电话号码 | y
 createDate | 创建日期 | y   
-## 获取某通讯录内所有条目
-    请求地址：/api/phonebook/:folderId
-    请求方式：get  
 ## 获取一条通讯录
     接口地址：/api/phonebook/:id
     请求方式：get  
@@ -93,9 +91,6 @@ folderId | 所在folder的id | y
 state | 事项状态（未完成0 完成1） | y
 content | 事项内容 | y
 createDate | 创建日期 | y  
-## 获取某列表内所有事项
-    请求地址：/api/todolist/:folderId
-    请求方式：get  
 ## 获取一条待办事项
     接口地址：/api/todolist/:id
     请求方式：get    
