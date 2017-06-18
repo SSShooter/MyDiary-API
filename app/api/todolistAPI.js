@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 router.use(function (req, res, next) {
-    console.log('Something is happening.');
+    console.log('Something is happening in todolistAPI.js');
     next();
 });
 
@@ -19,36 +19,22 @@ router.route('/todolist')
         var Todolist = new Todolist(req.body);
         Todolist.save(function (err) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Todolist created!' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item created!' });
         });
     })
-    .get(function (req, res) {
-        Todolist.find(function (err, Todolist) {
-            if (err)
-                res.send(err);
-
-            res.json(Todolist);
-        });
-    });
 
 router.route('/todolist/:id')
-    .get(function (req, res) {
-        Todolist.findById(req.params.id, function (err, Todolist) {
-            if (err)
-                res.send(err);
-            res.json(Todolist);
-        });
-    })
     .put(function (req, res) {
         Todolist.findById(req.params.id, function (err, Todolist) {
             if (err)
-                res.send(err);
-            Todolist.id = req.body.id;
+                res.json({ code: 2, msg: 'can\'t find', err: err });
+            Todolist.content = req.body.content;
+            Todolist.state = req.body.state;
             Todolist.save(function (err) {
                 if (err)
-                    res.send(err);
-                res.json({ message: 'Todolist updated!' });
+                    res.json({ code: 1, msg: 'save err', err: err });
+                res.json({ code: 0, msg: 'item Update!' });
             });
         });
     })
@@ -57,8 +43,8 @@ router.route('/todolist/:id')
             _id: req.params.id
         }, function (err, Todolist) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Successfully deleted' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item Delete!' });
         });
     });
 

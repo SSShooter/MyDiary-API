@@ -1,19 +1,22 @@
 var mongoose = require('mongoose');
 var folderSchama = mongoose.Schema({
     foldername: {
-        unique: true,
         type: String,
         index: true,
-        require:true
+        require: true
     },
     username: {
         type: String,
         index: true,
-        require:true
+        require: true
     },
-    create_date:{
-        type:String,
-        require:true
+    type: {
+        type: String,
+        require: true
+    },
+    create_date: {
+        type: String,
+        require: true
     }
 });
 

@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 router.use(function (req, res, next) {
-    console.log('Something is happening.');
+    console.log('Something is happening in phonebookAPI.js');
     next();
 });
 
@@ -19,30 +19,23 @@ router.route('/phonebook')
         var phonebook = new Phonebook(req.body);
         phonebook.save(function (err) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Phonebook created!' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item created!' });
         });
     });
 
 router.route('/phonebook/:id')
-    .get(function (req, res) {
-        Phonebook.findById(req.params.id, function (err, phonebook) {
-            if (err)
-                res.send(err);
-            res.json(phonebook);
-        });
-    })
     .put(function (req, res) {
         Phonebook.findById(req.params.id, function (err, phonebook) {
             if (err)
-                res.send(err);
+                res.json({ code: 2, msg: 'can\'t find', err: err });
+            phonebook.contact = req.body.contact;
+            phonebook.number = req.body.number;
             phonebook.save(function (err) {
                 if (err)
-                    res.send(err);
-
-                res.json({ message: 'Phonebook updated!' });
+                    res.json({ code: 1, msg: 'save err', err: err });
+                res.json({ code: 0, msg: 'item Update!' });
             });
-
         });
     })
     .delete(function (req, res) {
@@ -50,8 +43,8 @@ router.route('/phonebook/:id')
             _id: req.params.id
         }, function (err, phonebook) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Successfully deleted' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item Delete!' });
         });
     });
 

@@ -11,7 +11,7 @@ var diarySchama = mongoose.Schema({
     },
     pic:[],
     tag: String,
-    createDate: {
+    createdate: {
         type:String,
         require:true
     }

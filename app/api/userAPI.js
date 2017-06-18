@@ -6,9 +6,9 @@ var app = express();
 
 var session = require('express-session');
 app.use(session({
-  resave: true, // don't save session if unmodified  
-  saveUninitialized: false, // don't create session until something stored  
-  secret: 'bugaosuni'
+    resave: true, // don't save session if unmodified  
+    saveUninitialized: false, // don't create session until something stored  
+    secret: 'bugaosuni'
 }));
 
 var bodyParser = require('body-parser');
@@ -23,14 +23,17 @@ router.use(function (req, res, next) {
 
 router.route('/login')
     .post(function (req, res) {
-        console.log(req.body);
         User.findOne({ name: req.body.name }, function (err, user) {
-            console.log(user);
-            user.comparePassword(req.body.password, function (err, pass) {
-                if(err)
-                    res.send(err);
-                req.session.username = req.body.name;
-                res.json({ message: 'login!' });
+            if (user === null) res.json({ code: 3, msg: 'wrong username' });
+            user.comparePassword(req.body.password, function (err, isMatch) {
+                if (err)
+                    res.json({ code: 2, msg: 'db err', err: err });
+                if (!isMatch) {
+                    res.json({ code: 1, msg: 'wrong password' });
+                } else {
+                    req.session.username = req.body.name;
+                    res.json({ code: 0, msg: 'login!' });
+                }
             })
         })
     })
@@ -40,8 +43,8 @@ router.route('/register')
         var user = new User(req.body);
         user.save(function (err) {
             if (err)
-                res.send(err);
-            res.json({ message: 'User created!' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'User created!' });
         });
 
     });

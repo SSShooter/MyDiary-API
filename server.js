@@ -3,12 +3,12 @@
 
 // call the packages we need
 
-var mongoose   = require('mongoose');
+var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/mydiary');
-var express    = require('express');
+var express = require('express');
 var bodyParser = require('body-parser');
-var app        = express();
-var morgan     = require('morgan');
+var app = express();
+var morgan = require('morgan');
 
 var folderAPI = require('./app/api/folderAPI.js');
 var diaryAPI = require('./app/api/diaryAPI.js');
@@ -30,16 +30,22 @@ app.use(morgan('dev')); // log requests to the console
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-var port     = process.env.PORT || 8080; // set our port
+var port = process.env.PORT || 8080; // set our port
 
 
 
 // REGISTER OUR ROUTES -------------------------------
+app.use('/api', userAPI);
+
+app.use(function (req, res, next) {
+  if (req.session.username) next()
+  else res.json({ code: 1, msg: 'not login' })
+})
+
 app.use('/api', folderAPI);
 app.use('/api', diaryAPI);
 app.use('/api', phonebookAPI);
 app.use('/api', todolistAPI);
-app.use('/api', userAPI);
 // START THE SERVER
 // =============================================================================
 app.listen(port);

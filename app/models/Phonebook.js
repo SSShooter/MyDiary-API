@@ -13,7 +13,7 @@ var phonebookSchama = mongoose.Schema({
         type:String,
         require:true
     },
-    createDate: {
+    createdate: {
         type:String,
         require:true
     },

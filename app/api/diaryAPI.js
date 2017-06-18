@@ -3,13 +3,13 @@ var express = require('express');
 var router = express.Router();
 
 var app = express();
-// configure body parser
+
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// middleware to use for all requests
+
 router.use(function (req, res, next) {
-    console.log('Something is happening.');
+    console.log('Something is happening in diaryAPI.js');
     next();
 });
 
@@ -19,43 +19,32 @@ router.route('/diary')
         var diary = new Diary(req.body);
         diary.save(function (err) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Diary created!' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item created!' });
         });
     })
 
 router.route('/diary/:id')
-    .get(function (req, res) {
-        Diary.findById(req.params.id, function (err, diary) {
-            if (err)
-                res.send(err);
-            res.json(diary);
-        });
-    })
     .put(function (req, res) {
         Diary.findById(req.params.id, function (err, diary) {
             if (err)
-                res.send(err);
-            diary.id = req.body.id;
-
-            // 待定
-
+                res.json({ code: 2, msg: 'can\'t find', err: err });
+            diary.content = req.body.content;
+            diary.title = req.body.title;
             diary.save(function (err) {
                 if (err)
-                    res.send(err);
-                res.json({ message: 'Diary updated!' });
+                    res.json({ code: 1, msg: 'save err', err: err });
+                res.json({ code: 0, msg: 'item Update!' });
             });
         });
     })
-
-router.route('/diary/:id')
     .delete(function (req, res) {
         Diary.remove({
             _id: req.params.id
         }, function (err, diary) {
             if (err)
-                res.send(err);
-            res.json({ message: 'Successfully deleted' });
+                res.json({ code: 1, msg: 'err', err: err });
+            res.json({ code: 0, msg: 'item Delete!' });
         });
     });
 
