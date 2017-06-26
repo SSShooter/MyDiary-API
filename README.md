@@ -161,6 +161,7 @@ key | des | require
 --- | --- |---
 folderId | 所在folder的id | y
 contact | 联系人名称 | y
+initial | 首字母 | y
 number | 电话号码 | y
 createdate | 创建日期 | y   
 ## 修改一条通讯录
