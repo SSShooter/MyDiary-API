@@ -14,6 +14,10 @@ var folderSchama = mongoose.Schema({
         type: String,
         require: true
     },
+    total: {
+        type: Number,
+        default: 0
+    },
     create_date: {
         type: String,
         require: true

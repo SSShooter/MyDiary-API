@@ -3,18 +3,25 @@ var diarySchama = mongoose.Schema({
     folderId: {
         type: String,
         index: true,
-        require:true
+        require: true
     },
     content: {
-        type:String,
-        require:true
+        type: String,
+        require: true
     },
-    pic:[],
+    title: {
+        type: String,
+        require: true
+    },
+    pic: [],
     tag: String,
     createdate: {
-        type:String,
-        require:true
-    }
+        type: Number,
+        require: true
+    },
+    mood: String,
+    weather: String,
+    bookmark: false
 });
 
 var diaryModel = mongoose.model('diary', diarySchama);

@@ -27,20 +27,33 @@ app.use(session({
 app.use(morgan('dev')); // log requests to the console
 
 // configure body parser
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 8080; // set our port
 
 
-
+//允许跨域
+app.use('/api', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  res.header('Access-Control-Allow-Methods','PUT,POST,GET,DELETE,OPTIONS');
+  next();
+});
+app.use(express.static('public'));
 // REGISTER OUR ROUTES -------------------------------
 app.use('/api', userAPI);
 
-app.use(function (req, res, next) {
-  if (req.session.username) next()
-  else res.json({ code: 1, msg: 'not login' })
-})
+//必须登陆
+// app.use(function (req, res, next) {
+//   if (req.session.username) next()
+//   else res.json({
+//     code: 1,
+//     msg: 'not login'
+//   })
+// })
 
 app.use('/api', folderAPI);
 app.use('/api', diaryAPI);

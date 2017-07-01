@@ -5,9 +5,10 @@ var todolistSchama = mongoose.Schema({
         index: true,
         require:true
     },
-    //未完成0完成1
+    //未完成false完成true
     state:  {
-        type:String,
+        type:Boolean,
+        default: false,
         require:true
     },
     content:  {
