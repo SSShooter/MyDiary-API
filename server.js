@@ -52,7 +52,7 @@ app.use(function (req, res, next) {
   if (req.session.username) next()
   else {
     res.json({
-      code: 1,
+      code: 11,
       msg: 'not login'
     })
   }

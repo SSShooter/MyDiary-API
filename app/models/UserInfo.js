@@ -7,7 +7,8 @@ var userinfoSchama = mongoose.Schema({
   nickname: String,
   email: String,
   mobile: Number,
-  gender: Number
+  gender: Number,
+  avatar: String
 })
 
 var userinfoModel = mongoose.model('userinfo', userinfoSchama)

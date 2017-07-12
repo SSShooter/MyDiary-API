@@ -125,9 +125,9 @@ router.route('/diary/picupload')
       var newName = Date.now() + randomString()
       var path = require('path')
 
-      fs.renameSync(files.file.path, path.resolve(path.resolve(__dirname, '..'), '..') + '/public/' + newName + '.' + extName)
+      fs.renameSync(files.file.path, path.resolve(path.resolve(__dirname, '..'), '..') + '/public/img/' + newName + '.' + extName)
       res.json({
-        pic: 'http://www.time-record.net:8080/' + newName + '.' + extName
+        pic: 'http://www.time-record.net:8080/img/' + newName + '.' + extName
       })
     })
   })
