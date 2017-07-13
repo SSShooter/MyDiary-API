@@ -125,12 +125,16 @@ var Diary = require('../models/Diary')
 var Phonebook = require('../models/Phonebook')
 var Todolist = require('../models/Todolist')
 
-router.route('/folder/:type/:folderId')
+router.route('/folder/diary/:folderId/:page')
   .get(function (req, res) {
-    if (req.params.type === 'diary') {
-      Diary.find({
+    console.log(req.params)
+    Diary.find({
         folderId: req.params.folderId
-      }).sort('-createdate').exec(function (err, diary) {
+      })
+      .sort('-createdate')
+      .skip(req.params.page * 30)
+      .limit(30)
+      .exec(function (err, diary) {
         diary.total = diary.length
         if (err) {
           res.json({
@@ -144,23 +148,29 @@ router.route('/folder/:type/:folderId')
           data: diary
         })
       })
-    } else if (req.params.type === 'phonebook') {
+  })
+
+router.route('/folder/:type/:folderId')
+  .get(function (req, res) {
+    if (req.params.type === 'phonebook') {
       Phonebook.find({
-        folderId: req.params.folderId
-      }).sort('initial').exec(function (err, phonebook) {
-        phonebook.total = phonebook.length
-        if (err) {
-          res.json({
-            code: 1,
-            msg: 'find doc err',
-            err: err
-          })
-        }
-        res.json({
-          code: 0,
-          data: phonebook
+          folderId: req.params.folderId
         })
-      })
+        .sort('initial')
+        .exec(function (err, phonebook) {
+          phonebook.total = phonebook.length
+          if (err) {
+            res.json({
+              code: 1,
+              msg: 'find doc err',
+              err: err
+            })
+          }
+          res.json({
+            code: 0,
+            data: phonebook
+          })
+        })
     } else if (req.params.type === 'todolist') {
       Todolist.find({
         folderId: req.params.folderId
