@@ -17,6 +17,7 @@ router.use(function (req, res, next) {
 
 router.route('/todolist')
   .post(function (req, res) {
+    req.body.username = req.session.username
     var todolist = new Todolist(req.body)
     todolist.save(function (err) {
       Folder.findByIdAndUpdate(req.body.folderId, {
@@ -68,14 +69,16 @@ router.route('/todolist/:id')
   })
   .delete(function (req, res) {
     Todolist.findOneAndRemove({
-      _id: req.params.id
+      _id: req.params.id,
+      username : req.session.username
     }, function (err, todolist) {
-      if (err) {
+      if (err || !todolist) {
         res.json({
           code: 1,
           msg: 'err',
           err: err
         })
+        return
       }
       Folder.findByIdAndUpdate(todolist.folderId, {
         $inc: {

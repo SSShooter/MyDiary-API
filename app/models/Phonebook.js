@@ -20,6 +20,10 @@ var phonebookSchama = mongoose.Schema({
   createdate: {
     type: String,
     require: true
+  },
+  username: {
+    type: String,
+    require: true
   }
 })
 

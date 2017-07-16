@@ -18,6 +18,10 @@ var todolistSchama = mongoose.Schema({
   createdate: {
     type: String,
     require: true
+  },
+  username: {
+    type: String,
+    require: true
   }
 })
 

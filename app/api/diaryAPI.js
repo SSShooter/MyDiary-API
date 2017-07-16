@@ -20,6 +20,7 @@ router.use(function (req, res, next) {
 
 router.route('/diary')
   .post(function (req, res) {
+    req.body.username = req.session.username
     var diary = new Diary(req.body)
     diary.save(function (err) {
       Folder.findByIdAndUpdate(req.body.folderId, {
@@ -70,14 +71,16 @@ router.route('/diary/:id')
   })
   .delete(function (req, res) {
     Diary.findOneAndRemove({
-      _id: req.params.id
+      _id: req.params.id,
+      username : req.session.username
     }, function (err, diary) {
-      if (err) {
+      if (err || !diary) {
         res.json({
           code: 1,
           msg: 'err',
           err: err
         })
+        return
       }
       Folder.findByIdAndUpdate(diary.folderId, {
         $inc: {

@@ -21,7 +21,11 @@ var diarySchama = mongoose.Schema({
   },
   mood: String,
   weather: String,
-  bookmark: false
+  bookmark: false,
+  username: {
+    type: String,
+    require: true
+  }
 })
 
 var diaryModel = mongoose.model('diary', diarySchama)

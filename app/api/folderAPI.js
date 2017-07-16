@@ -43,7 +43,6 @@ router.route('/folder')
   })
 
   .get(function (req, res) {
-    console.log(req.session.username)
     Folder.find({
       username: req.session.username
     }, function (err, folder) {

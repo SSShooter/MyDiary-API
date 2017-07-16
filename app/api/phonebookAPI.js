@@ -19,6 +19,7 @@ router.use(function (req, res, next) {
 
 router.route('/phonebook')
   .post(function (req, res) {
+    req.body.username = req.session.username
     var phonebook = new Phonebook(req.body)
     phonebook.save(function (err) {
       Folder.findByIdAndUpdate(req.body.folderId, {
@@ -69,14 +70,16 @@ router.route('/phonebook/:id')
   })
   .delete(function (req, res) {
     Phonebook.findOneAndRemove({
-      _id: req.params.id
+      _id: req.params.id,
+      username : req.session.username
     }, (err, phonebook) => {
-      if (err) {
+      if (err || !phonebook) {
         res.json({
           code: 1,
           msg: 'err',
           err: err
         })
+        return
       }
       Folder.findByIdAndUpdate(phonebook.folderId, {
         $inc: {
