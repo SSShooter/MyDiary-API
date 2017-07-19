@@ -39,6 +39,20 @@ gender | 性别 | y
     "msg": "User created!"
 }
 ```
+## 获取当前用户信息
+    接口地址：/api/getinfo  
+    请求方式：get
+## 更新当前用户信息
+    接口地址：/api/saveinfo  
+    请求方式：post
+## 上传当前用户头像
+    接口地址：/api/uploadavatar             
+    请求方式：post               
+    请求参数说明：                       
+key | des | require
+--- | --- |---
+files | 文件 | y                
+
 ## 当前用户新建文件夹
     接口地址：/api/folder   
     请求方式：post  
@@ -185,42 +199,4 @@ createdate | 创建日期 | y
 ## 删除一条待办事项
     接口地址：/api/todolist/:id
     请求方式：delete  
-
-# DB     
-## folder   
-key | des | require 
---- | --- |---    
-id | 自增主键 | y 
-type | 文件夹类型 | y
-foldername | 文件夹名 | y
-username | 用户名 | y
-create_date | 创建日期 | y   
-
-## diary 
-key | des | require
---- | --- |---
-id | 自增主键 | y 
-folderId | 所在folder的id | y
-content | 日记内容 | y
-pic | 图片（数组）（地址） | n
-tag | 标签 | n
-createDate | 创建日期 | y   
-
-## phonebook     
-key | des | require
---- | --- |---
-id | 自增主键 | y 
-folderId | 所在folder的id | y
-contact | 联系人名称 | y
-number | 电话号码 | y
-createDate | 创建日期 | y   
- 
-## todolist     
-key | des | require
---- | --- |---
-id | 自增主键 | y 
-folderId | 所在folder的id | y
-state | 事项状态（未完成0 完成1） | y
-content | 事项内容 | y
-createDate | 创建日期 | y   
 
