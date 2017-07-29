@@ -16,16 +16,11 @@ app.use(bodyParser.urlencoded({
   extended: true
 }))
 app.use(bodyParser.json())
-router.use(function (req, res, next) {
-  console.log('Something is happening.')
-  next()
-})
 
 router.route('/folder')
   .post(function (req, res) {
     req.body.username = req.session.username
     req.body.total = 0
-    console.log(req.body)
     var folder = new Folder(req.body)
     folder.save(function (err) {
       if (err) {
@@ -92,7 +87,6 @@ router.route('/folder/:id')
 router.route('/folder/:id')
   .delete(function (req, res) {
     Folder.findById(req.params.id, function (err, folder) {
-      console.log(folder, Boolean(folder === null))
       if (err) {
         res.json({
           code: 1,
@@ -126,7 +120,6 @@ var Todolist = require('../models/Todolist')
 
 router.route('/folder/diary/:folderId/:page')
   .get(function (req, res) {
-    console.log(req.params)
     Diary.find({
         folderId: req.params.folderId
       })

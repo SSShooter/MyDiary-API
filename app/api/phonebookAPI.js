@@ -12,93 +12,95 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-router.use(function (req, res, next) {
-  console.log('Something is happening in phonebookAPI.js')
-  next()
-})
-
 router.route('/phonebook')
-  .post(function (req, res) {
+  .post((req, res) => {
     req.body.username = req.session.username
     var phonebook = new Phonebook(req.body)
-    phonebook.save(function (err) {
-      Folder.findByIdAndUpdate(req.body.folderId, {
-        $inc: {
-          total: +1
-        }
-      }).exec()
-      if (err) {
+    phonebook
+      .save()
+      .then(() => {
+        return Folder.findByIdAndUpdate(req.body.folderId, {
+          $inc: {
+            total: +1
+          }
+        }).exec()
+      })
+      .then(() => {
+        res.json({
+          code: 0,
+          msg: 'item created!'
+        })
+      })
+      .catch(err => {
         res.json({
           code: 1,
           msg: 'err',
           err: err
         })
-      }
-      res.json({
-        code: 0,
-        msg: 'item created!'
       })
-    })
   })
 
 router.route('/phonebook/:id')
   .put(function (req, res) {
-    Phonebook.findById(req.params.id, function (err, phonebook) {
-      if (err) {
+    Phonebook.findById(req.params.id).exec()
+      .then((phonebook) => {
+        phonebook.contact = req.body.contact
+        phonebook.number = req.body.number
+        return phonebook.save()
+      }, err => {
         res.json({
           code: 2,
           msg: 'can\'t find',
           err: err
         })
-      }
-      phonebook.contact = req.body.contact
-      phonebook.number = req.body.number
-      phonebook.save(function (err) {
-        if (err) {
-          res.json({
-            code: 1,
-            msg: 'save err',
-            err: err
-          })
-        }
+      })
+      .then(() => {
         res.json({
           code: 0,
           msg: 'item Update!'
         })
+      }, err => {
+        res.json({
+          code: 1,
+          msg: 'save err',
+          err: err
+        })
       })
-    })
   })
-  .delete(function (req, res) {
+  .delete((req, res) => {
     Phonebook.findOneAndRemove({
-      _id: req.params.id,
-      username : req.session.username
-    }, (err, phonebook) => {
-      if (err || !phonebook) {
+        _id: req.params.id,
+        username: req.session.username
+      }).exec()
+      .then(phonebook => {
+        if (!phonebook) {
+          return Promise.reject('查不到记录')
+        }
+        return Folder.findByIdAndUpdate(phonebook.folderId, {
+          $inc: {
+            total: -1
+          }
+        })
+      }, err => {
         res.json({
           code: 1,
           msg: 'err',
           err: err
         })
-        return
-      }
-      Folder.findByIdAndUpdate(phonebook.folderId, {
-        $inc: {
-          total: -1
-        }
-      }, function (err, doc) {
-        if (err) {
-          res.json({
-            code: 1,
-            msg: 'err',
-            err: err
-          })
-        }
+      })
+      .then(doc => {
         res.json({
           code: 0,
           msg: 'item Delete!'
         })
       })
-    })
+      .catch(err => {
+        res.json({
+          code: 1,
+          msg: 'err',
+          err: err
+        })
+      })
   })
 
 module.exports = router

@@ -10,11 +10,6 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-router.use(function (req, res, next) {
-  console.log('Something is happening in todolistAPI.js')
-  next()
-})
-
 router.route('/todolist')
   .post(function (req, res) {
     req.body.username = req.session.username
@@ -49,9 +44,7 @@ router.route('/todolist/:id')
           err: err
         })
       }
-      console.log(todolist.state, !todolist.state)
       todolist.state = !todolist.state
-      console.log(todolist.state)
       todolist.save(function (err) {
         if (err) {
           res.json({

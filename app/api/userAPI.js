@@ -20,11 +20,6 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-router.use(function (req, res, next) {
-  console.log('Something is happening.')
-  next()
-})
-
 router.route('/login')
   .post(function (req, res) {
     User.findOne({
@@ -45,7 +40,6 @@ router.route('/login')
         return
       }
       user.comparePassword(req.body.password, (err, isMatch) => {
-        console.log(req.body.name, req.session.id)
         if (err) {
           res.json({
             code: 2,
@@ -75,8 +69,6 @@ router.route('/register')
     var userinfo = new UserInfo({
       username: req.body.name
     })
-    console.log(user)
-    console.log(userinfo)
     user.save(err => {
       if (err) {
         res.json({
@@ -153,10 +145,8 @@ router.route('/uploadavatar')
         })
         return
       }
-      console.log(info)
       var form = new formidable.IncomingForm()
       form.parse(req, (err, fields, files) => {
-        console.log(info)
         if (err) {
           res.send(err)
           return

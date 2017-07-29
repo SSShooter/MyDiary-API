@@ -13,11 +13,6 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-router.use(function (req, res, next) {
-  console.log('Something is happening in diaryAPI.js')
-  next()
-})
-
 router.route('/diary')
   .post(function (req, res) {
     req.body.username = req.session.username
