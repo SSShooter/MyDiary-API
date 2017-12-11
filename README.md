@@ -1,3 +1,11 @@
+# mongoDB的安装
+## windows
+下载地址 https://www.mongodb.com/download-center#community    
+运行exe安装后，新建数据库存放数据的文件夹（例如在c盘新建mongodata文件夹）
+然后找到mongodb的安装路径运行mongod --dbpath c:\mongodata    
+## centos7
+传送门 https://segmentfault.com/a/1190000008647182    
+
 # API doc
 ## 用户登陆         
     接口地址：/api/login   
