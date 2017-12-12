@@ -32,12 +32,13 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-var port = process.env.PORT || 8080 // set our port
+var port = process.env.PORT || 8090 // set our port
 
 // 允许跨域
 app.use('/api', function (req, res, next) {
   res.header('Access-Control-Allow-Credentials', 'true')
-  res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  // res.header('Access-Control-Allow-Origin', 'http://localhost:8080')
+  res.header('Access-Control-Allow-Origin', 'http://192.168.0.144:8080')
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type')
   res.header('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS')
   next()

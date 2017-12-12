@@ -1,11 +1,12 @@
 var mongoose = require('mongoose')
+mongoose.Promise = global.Promise
 var todolistSchama = mongoose.Schema({
   folderId: {
     type: String,
     index: true,
     require: true
   },
-    // 未完成false完成true
+  // 未完成false完成true
   state: {
     type: Boolean,
     default: false,
