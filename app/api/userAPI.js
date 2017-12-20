@@ -89,7 +89,7 @@ router.route('/info').get(function(req, res) {
     }
   )
 })
-router.route('/saveinfo').post((req, res) => {
+router.route('/info').put((req, res) => {
   UserInfo.findOneAndUpdate(
     {
       username: req.session.username
@@ -110,7 +110,7 @@ router.route('/saveinfo').post((req, res) => {
     }
   )
 })
-router.route('/uploadavatar').post((req, res) => {
+router.route('/avatar').post((req, res) => {
   UserInfo.findOne(
     {
       username: req.session.username
@@ -142,7 +142,8 @@ router.route('/uploadavatar').post((req, res) => {
             extName
         )
         info.avatar =
-          'http://www.time-record.net:8080/avatar/' + newName + '.' + extName
+          // 'http://www.time-record.net:8080/avatar/' + newName + '.' + extName
+          'http://192.168.0.144:8090/avatar/' + newName + '.' + extName
         info.save(function() {
           res.json({
             code: 0,

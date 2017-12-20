@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-mongoose.Promise = global.Promise
 // 用于md5加密
 var bcrypt = require('bcryptjs')
 // 加盐数

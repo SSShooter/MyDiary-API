@@ -52,10 +52,10 @@ gender | 性别 | y
     接口地址：/api/info  
     请求方式：get
 ## 更新当前用户信息
-    接口地址：/api/saveinfo  
-    请求方式：post
+    接口地址：/api/info  
+    请求方式：put
 ## 上传当前用户头像
-    接口地址：/api/uploadavatar             
+    接口地址：/api/avatar             
     请求方式：post               
     请求参数说明：                       
 key | des | require
