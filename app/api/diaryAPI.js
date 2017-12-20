@@ -5,14 +5,6 @@ var formidable = require('formidable')
 var fs = require('fs')
 var router = express.Router()
 
-var app = express()
-
-var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json())
-
 router.route('/diary')
   .post(function (req, res) {
     req.body.username = req.session.username

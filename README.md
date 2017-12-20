@@ -49,7 +49,7 @@ gender | 性别 | y
 }
 ```
 ## 获取当前用户信息
-    接口地址：/api/getinfo  
+    接口地址：/api/info  
     请求方式：get
 ## 更新当前用户信息
     接口地址：/api/saveinfo  

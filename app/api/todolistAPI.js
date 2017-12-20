@@ -2,13 +2,6 @@ var Folder = require('../models/Folder')
 var Todolist = require('../models/Todolist')
 var express = require('express')
 var router = express.Router()
-var app = express()
-
-var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json())
 
 router.route('/todolist')
   .post(function (req, res) {

@@ -1,28 +1,9 @@
 var User = require('../models/User')
 var UserInfo = require('../models/UserInfo')
+var express = require('express')
 var formidable = require('formidable')
 var fs = require('fs')
-var express = require('express')
 var router = express.Router()
-
-var app = express()
-
-var session = require('express-session')
-app.use(
-  session({
-    resave: true, // don't save session if unmodified
-    saveUninitialized: false, // don't create session until something stored
-    secret: 'bugaosuni'
-  })
-)
-
-var bodyParser = require('body-parser')
-app.use(
-  bodyParser.urlencoded({
-    extended: true
-  })
-)
-app.use(bodyParser.json())
 
 router.route('/login').post(function(req, res) {
   User.findOne({
@@ -88,7 +69,7 @@ router.route('/register').post((req, res) => {
   })
 })
 
-router.route('/getinfo').get(function(req, res) {
+router.route('/info').get(function(req, res) {
   UserInfo.findOne(
     {
       username: req.session.username

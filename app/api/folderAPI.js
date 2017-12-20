@@ -1,21 +1,7 @@
 var Folder = require('../models/Folder')
 var express = require('express')
 var router = express.Router()
-
-var app = express()
-
-var session = require('express-session')
-app.use(session({
-  resave: true, // don't save session if unmodified
-  saveUninitialized: false, // don't create session until something stored
-  secret: 'bugaosuni'
-}))
-
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json())
 
 router.route('/folder')
   .post(function (req, res) {

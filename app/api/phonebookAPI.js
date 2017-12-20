@@ -1,16 +1,7 @@
 var Folder = require('../models/Folder')
 var Phonebook = require('../models/Phonebook')
 var express = require('express')
-
 var router = express.Router()
-
-var app = express()
-
-var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({
-  extended: true
-}))
-app.use(bodyParser.json())
 
 router.route('/phonebook')
   .post((req, res) => {
